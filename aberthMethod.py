@@ -66,11 +66,11 @@ def     aberthMethod(f):
             ratio =  f.image(r) / f.derivative(r)
             offset = ratio / (1 - (ratio * sum(1/(r - x) 
                               for j, x in enumerate(roots) if j != k)))
-            if round(offset.real, 12) == 0 and round(offset.imag, 12) == 0:
+            if round(offset.real, 14) == 0 and round(offset.imag, 14) == 0:
                 valid += 1
             roots[k] -= offset
         if valid == len(roots):
             break
         iteration += 1
 
-    return iteration, roots
+    return iteration, [complex(round(r.real, 12), round(r.imag, 12)) for r in roots]

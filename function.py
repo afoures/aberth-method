@@ -12,7 +12,7 @@
 
 class   Function():
     """
-    Function that can represent a polynomial.
+    Function object that can represent a polynomial.
 
     Parameters
     ----------
@@ -33,14 +33,20 @@ class   Function():
     """
 
     def __init__(self, coef):
+        """print(coef, min(coef), max(coef))
+        keys = range(min(coef), max(coef)+1)
+        self.__coef= {}
+        for key in keys:
+            self.__coef[key] = complex(coef[key]) if key in coef else complex(0)"""
         self.__coef = {key: complex(value) for key, value in coef.items() if value != 0}
-
+        print(self.__coef)
+            
     @property
     def degree(self):
         """
         Return the degree of the polynomial.
         """
-        return len(self.__coef) - 1
+        return max(self.__coef)
 
     @property
     def coef(self):
@@ -50,7 +56,7 @@ class   Function():
         Exponantiation for each is now the index in the list.
         """
         indexes = list(self.__coef.keys())
-        index = min(indexes)
+        index = min(indexes) if min(indexes) < 0 else 0
         coef = []
         remains = len(indexes)
         while remains > 0:
@@ -85,4 +91,4 @@ class   Function():
         """
         Return the derivative of the polynomial for 'x'.
         """
-        return sum(coef*(pow(x, i)) for i, coef in enumerate(self.dcoef))
+        return (self.image(x + 1.e-12) - self.image(x)) / 1.e-12
